@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Serveur de Sinay</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    #vipButton {
+      padding: 20px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(45deg, #ff007f, #ffcc00, #00e6e6);
+      animation: colorShift 2s infinite linear;
+      cursor: pointer;
+      box-shadow: 0 0 25px #00e6e6;
+    }
+
+    @keyframes colorShift {
+      0% { background: #ff007f; }
+      33% { background: #ffcc00; }
+      66% { background: #00e6e6; }
+      100% { background: #ff007f; }
+    }
+
+    .popup {
+      position: fixed;
+      background-color: #1c1c1c;
+      border: 2px solid #00e6e6;
+      padding: 15px;
+      color: white;
+      border-radius: 10px;
+      animation: fadeIn 0.3s ease;
+      z-index: 1000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #vipFinal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222;
+      border: 3px solid #f0f;
+      padding: 25px;
+      border-radius: 15px;
+      font-size: 18px;
+      display: none;
+      z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+  <button id="vipButton">Serveur de Sinay</button>
+  <div id="vipFinal">🎉 Vous avez le VIP !<br><br>
+    Prenez une capture d’écran de ce message<br>
+    puis contactez les modos de Sinay.<br><br>
+    ⛔ Une seule chance par personne.
+  </div>
+
+  <script>
+    let alreadyClaimed = false;
+
+    document.getElementById("vipButton").onclick = () => {
+      if (alreadyClaimed) return;
+
+      for (let i = 0; i < 15; i++) {
+        const popup = document.createElement("div");
+        popup.className = "popup";
+        popup.style.top = `${Math.random() * window.innerHeight}px`;
+        popup.style.left = `${Math.random() * window.innerWidth}px`;
+        popup.innerHTML = "🔥 Obtenez le VIP dans Sinay Server dès maintenant !";
+        document.body.appendChild(popup);
+
+        popup.onclick = () => {
+          if (alreadyClaimed) return;
+          alreadyClaimed = true;
+
+          document.getElementById("vipFinal").style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("vipFinal").style.display = "none";
+          }, 45000); // 45 secondes
+        };
+
+        setTimeout(() => popup.remove(), 7000); // nettoie après 7s
+      }
+    };
+  </script>
+</body>
+</html>
